@@ -4,7 +4,6 @@ import java.util.List;
 
 public class QuickSort <T extends Comparable<T>> implements Sorter<T>{
     List<T> result ;
-
     @Override
     public List<T> sort(List<T> array){
         result = new ArrayList<>(array.size());
@@ -24,8 +23,8 @@ public class QuickSort <T extends Comparable<T>> implements Sorter<T>{
     private int quickSortPartioning(int left, int right, T pivot){
         int low = left, high = right -1;
         while (true){
-            while (low < right && result.get(low).compareTo(pivot) < 0) low++;
-            while (high > 0 && result.get(high).compareTo(pivot) > 0) high--;
+            while (low < right && result.get(low).compareTo(pivot) <= 0) low++;
+            while (high > left && result.get(high).compareTo(pivot) >= 0) high--;
             if(low < high) swap(low, high);
             else break;
         }

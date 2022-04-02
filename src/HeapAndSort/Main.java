@@ -6,12 +6,14 @@ import HeapAndSort.Sorting.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main{
     static Scanner reader = new Scanner(System.in);
 
     public static void main(String[] args) {
+//        generateRandomList(300);
         System.out.println("Select An Option: \n 1. To Use The Heap\n 2. To sort some list of data\n Any Other Key. exit");
         System.out.print("=> ");
         byte option;
@@ -65,50 +67,39 @@ public class Main{
         }
     }
     static void sort(){
-        Sorter<Integer> sorter;
+        Sorter<Integer> sorter = null;
         boolean exit = false;
-        byte option = reader.nextByte();
         List<Integer> result = new ArrayList<>();
         while (!exit){
-            System.out.println("Select A Sorting Technique: \n");
+            System.out.println("Select A Sorting Technique: ");
             System.out.println(" 1. Selection Sort  2. Bubble Sort  3. Insertion Sort\n 4. Merge Sort  5. Quick Sort  6. Heap Sort\n Any Other Key. exit");
             System.out.print("=> ");
+            byte option = reader.nextByte();
             try {
                 switch (option) {
-                    case 1 -> {
-                        sorter = new SelectionSort<>();
-                        result = sorter.sort(getIntList());
-                    }
-                    case 2 -> {
-                        sorter = new BubbleSort<>();
-                        result = sorter.sort(getIntList());
-                    }
-                    case 3 -> {
-                        sorter = new InsertionSort<>();
-                        result = sorter.sort(getIntList());
-                    }
-                    case 4 -> {
-                        sorter = new MergeSort<>();
-                        result = sorter.sort(getIntList());
-                    }
-                    case 5 -> {
-                        sorter = new QuickSort<>();
-                        result = sorter.sort(getIntList());
-                    }
-                    case 6 -> {
-                        sorter = new HeapSort<>();
-                        result = sorter.sort(getIntList());
-                    }
+                    case 1 -> sorter = new SelectionSort<>();
+                    case 2 -> sorter = new BubbleSort<>();
+                    case 3 -> sorter = new InsertionSort<>();
+                    case 4 -> sorter = new MergeSort<>();
+                    case 5 -> sorter = new QuickSort<>();
+                    case 6 -> sorter = new HeapSort<>();
                     default -> exit = true;
                 }
             }
             catch (Exception e){
+                System.out.println(e.getMessage());
                 exit = true;
             }
             if(!exit){
+                List<Integer> list = new ArrayList<>(getIntList());
+//                long time = System.currentTimeMillis();
+//                sorter.sort(list);
+                result = sorter.sort(list);
+//                System.out.println("time taken: "+ (System.currentTimeMillis() - time) + " ms");
                 for(Integer num: result) System.out.print(num + " ");
                 System.out.println();
             }
+
         }
     }
 
@@ -129,5 +120,9 @@ public class Main{
         System.out.println("Enter A List(element per line): ");
         for(int i = 0; i < size; i++) list.add(listReader.nextDouble());
         return list;
+    }
+    private static void generateRandomList(int size){
+        Random random = new Random();
+        for(int i = 0; i < size; i++) System.out.println(random.nextInt(1000));
     }
 }
